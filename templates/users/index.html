@@ -2,5 +2,11 @@
 {% block content %}
 <div class="row">
     <h1 class="text-center alert alert-info">Hello from User!</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <input class="btn btn-success" type="submit" value="Create">
+    </form>
 </div>
 {% endblock content %}
