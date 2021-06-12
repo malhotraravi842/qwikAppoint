@@ -8,10 +8,10 @@
         <fieldset class="form-group">
             {{ form|crispy}}
         </fieldset>
-        <input type="submit" class="btn btn-success mt-5" value="Sign Up">
-        <br />
-        <sub><a href="{% url 'login' %}" style="text-decoration: none; color: blue; padding:3%; cursor:pointer;">Already
-                have an account ?</a></sub>
+        <div class="mt-5">
+            <input type="submit" class="btn btn-success" value="Sign Up">
+            <a class="btn btn-danger text-white" href="{% url 'login' %}">Already have an account ?</a>
+        </div>
     </form>
 </div>
 {% endblock content %}
