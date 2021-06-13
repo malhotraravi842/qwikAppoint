@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <h1 class="text-center alert alert-info">Hello from Organization!</h1>
+    <div class="col-sm-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">decription</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if orgs %}
+                {% for org in orgs %}
+                <tr>
+                    <th scope="row">{{ org.user.id }}</th>
+                    <td>{{ org.user.username }}</td>
+                    <td>{{ org.description }}</td>
+                    <td>{{ org.address }}</td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" href="{% url 'appointment' org.user.id %}">Take
+                            Appointment</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td>
+                        No Organizations to show :(
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

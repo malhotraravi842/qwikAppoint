@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row">
-    <h1 class="text-center alert alert-info">Hello from Organization!</h1>
-    <div class="col-sm-5 offset-1">
+    <h1 class="text-center alert alert-info">Hello from User!</h1>
+    {% if text %}
+    <h1>{{ text }}</h1>
+    {% endif %}
 
+    <div class="col-sm-8 offset-2">
         <form action="" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
             <input class="btn btn-success" type="submit" value="Create">
         </form>
-    </div>
-
-    <div class="col-sm-6">
-        <a class="btn btn-danger" href="{% url 'appointment' %}">Create Appoinment</a>
     </div>
 </div>
 {% endblock content %}

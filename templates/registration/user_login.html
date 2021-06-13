@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <h1 class="text-center alert alert-info">You are Not Logged In, Login First</h1>
+    <a class='btn btn-info' href="{% url 'login' %}">Login</a>
+</div>
+{% endblock content %}

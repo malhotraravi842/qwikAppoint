@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <h1 class="text-center alert alert-info">Hello from Organization!</h1>
+    <div class="col-sm-5 offset-1">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-success" type="submit" value="Create">
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Appointment Id</th>
+                    <th scope="col">Organization</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if appointments %}
+                {% for appointment in appointments %}
+                <tr>
+                    <th scope="row">{{ appointment.appointment_id }}</th>
+                    <td>{{ appointment.org.user.username }}</td>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.time }}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td>
+                        No Appointments :(
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

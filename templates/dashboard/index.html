@@ -2,5 +2,13 @@
 {% block content %}
 <div class="row">
     <h1 class="text-center alert alert-danger">Welcome to Homepage!</h1>
+    <div class="col-sm-3">
+        <h4>Organization</h4>
+        <a href="{% url 'org_profile' %}">Organization</a>
+    </div>
+    <div class="col-sm-3">
+        <h4>User</h4>
+        <a href="{% url 'user_profile' %}">User</a>
+    </div>
 </div>
 {% endblock content %}
