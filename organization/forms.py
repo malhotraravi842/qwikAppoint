@@ -1,19 +1,17 @@
 from django import forms
-from django.db.models import fields
-from django.forms.models import model_to_dict
-from .models import Organization, Appointment
+from .models import Appointment
 from django.contrib.auth.models import User
 
-class OrganizationProfile(forms.ModelForm):
+# class OrganizationProfile(forms.ModelForm):
 
-    class Meta:
-        model = Organization
-        fields = ('contact', 'description', 'address')
-        widgets = {
-            'contact': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.TextInput(attrs={'class': 'form-control'}),
-            'address': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+#     class Meta:
+#         model = Organization
+#         fields = ('contact', 'description', 'address')
+#         widgets = {
+#             'contact': forms.TextInput(attrs={'class': 'form-control'}),
+#             'description': forms.TextInput(attrs={'class': 'form-control'}),
+#             'address': forms.TextInput(attrs={'class': 'form-control'}),
+#         }
 
     
 

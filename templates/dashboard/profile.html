@@ -1,17 +1,80 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row">
-    <h1 class="text-center alert alert-info">Hello User!</h1>
-    {% if text %}
-    <h1>{{ text }}</h1>
-    {% endif %}
-
+    <h1 class="text-center alert alert-info">Hello from User!</h1>
+    {% if profile %}
     <div class="col-sm-8 offset-2">
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input class="btn btn-success" type="submit" value="Create">
-        </form>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ profile.full_name }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Username</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ profile.user.username }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ profile.user.email }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ profile.contact }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Address</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ profile.address }}, {{ profile.pincode }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Bio</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ profile.bio }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a class="btn btn-info" href="{% url 'edit_profile' profile.id %}">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-sm-8 offset-2">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-success" type="submit" value="Create Profile">
+            </form>
+        </div>
+        {% endif %}
     </div>
-</div>
-{% endblock content %}
+    {% endblock content %}

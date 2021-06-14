@@ -1,8 +1,9 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from .forms import RegistrationForm, ProfileForm
+from .forms import RegistrationForm, ProfileForm, ProfileEditForm
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text, force_bytes
@@ -14,7 +15,14 @@ from .models import Profile
 # Create your views here.
 
 def homepage(request):
-    return render(request, 'dashboard/index.html')
+    if request.user.is_authenticated:
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None
+        return render(request, 'dashboard/index.html', {'profile': profile})
+    else:
+        return render(request, 'dashboard/home.html')
 
 def signup(request):
     if request.method == 'POST':
@@ -59,26 +67,65 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-def user_profile(request):
+def edit_profile(request, id):
+    if request.method == 'POST':
+        profile = Profile.objects.get(pk=id)
+        form = ProfileEditForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/profile/')
+    else:
+        profile = Profile.objects.get(pk=id)
+        form = ProfileEditForm(instance=profile)
+
+    return render(request, 'dashboard/edit_profile.html', {'form': form})
+
+
+# def user_profile(request):
+#     if request.user.is_authenticated:
+#         if request.method == 'POST':
+#             form = ProfileForm(request.POST)
+#             if form.is_valid():
+#                 type = form.cleaned_data['type']
+#                 contact = form.cleaned_data['contact']
+#                 bio = form.cleaned_data['bio']
+#                 address = form.cleaned_data['address']
+#                 pincode = form.cleaned_data['pincode']
+
+#                 form_data = Profile(user=request.user, type=type, contact=contact, bio=bio, address=address, pincode=pincode)
+#                 form_data.save()
+#         else:
+#             user = request.user
+#             try:
+#                 profile = Profile.objects.get(user=user)
+#             except Profile.DoesNotExist:
+#                 profile = None
+#             form = ProfileForm(instance=profile)
+#         return render(request, 'dashboard/profile.html', {'form': form, 'profile': 'profile'})
+#     else:
+#         return render(request, 'dashboard/profile.html', {'text': 'User is Not Logged In'})
+
+
+
+def profile(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = ProfileForm(request.POST)
             if form.is_valid():
+                full_name = form.cleaned_data['full_name']
                 type = form.cleaned_data['type']
                 contact = form.cleaned_data['contact']
                 bio = form.cleaned_data['bio']
                 address = form.cleaned_data['address']
                 pincode = form.cleaned_data['pincode']
-
-                form_data = Profile(user=request.user, type=type, contact=contact, bio=bio, address=address, pincode=pincode)
+                form_data = Profile(user=request.user, full_name=full_name, type=type , contact=contact, bio=bio, address=address, pincode=pincode)
                 form_data.save()
-        else:
-            user = request.user
-            try:
-                profile = Profile.objects.get(user=user)
-            except Profile.DoesNotExist:
-                profile = None
-            form = ProfileForm(instance=profile)
-        return render(request, 'dashboard/profile.html', {'form': form, 'profile': 'profile'})
-    else:
-        return render(request, 'dashboard/profile.html', {'text': 'User is Not Logged In'})
+            return HttpResponseRedirect('/profile/')
+
+        form = ProfileForm()
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None
+
+        return render(request, 'dashboard/profile.html', {'profile': profile, 'form': form})
