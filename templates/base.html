@@ -10,13 +10,13 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
+    {% block style %} {% endblock style %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Qwik Appoint</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark nav-color">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">QwikAppoint</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -33,6 +33,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profile' %}">Profile</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_appointments' %}">Appointments</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">LogOut</a></li>
                     {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
@@ -42,11 +45,14 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-5">
+    <div class="container content mt-5">
         {% block content %}
 
         {% endblock content %}
     </div>
+    {% block page %}
+
+    {% endblock page %}
 
     <!-- <footer class="footer">
         @Copyright. All Rights Reserved
@@ -66,6 +72,9 @@
     -->
 
     <script src="{% static 'js/style.js' %}"></script>
+    {% block scripts %}
+
+    {% endblock scripts %}
 </body>
 
 </html>

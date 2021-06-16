@@ -1,17 +1,56 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
-{% block content %}
+{% load static %}
 
-<div class="content-section col-md-8 col-md-offset-2">
-    <form method="POST" style="border: 1px solid black; margin: 4%; padding:10%; border-radius:1%;">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            {{ form|crispy}}
-        </fieldset>
-        <div class="mt-5">
-            <input type="submit" class="btn btn-success" value="Sign Up">
-            <a class="btn btn-danger text-white" href="{% url 'login' %}">Already have an account ?</a>
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock style %}
+{% block content %}
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="inactive underlineHover"> <a href="{% url 'login' %}">Sign In</a> </h2>
+        <h2 class="active"><a href="{% url 'signup' %}">Sign Up</a></h2>
+        <form class="login-form" method="post">
+            {% csrf_token %}
+            <div class="error">
+                {{ form.non_field_errors }}
+            </div>
+            <!-- Username -->
+            <div class="error">
+                {{ form.username.errors }}
+            </div>
+            {{ form.username }} <br>
+            <!-- Email -->
+            <div class="error">
+                {{ form.email.errors }}
+            </div>
+            {{ form.email }} <br>
+
+            <!-- Password 1 -->
+            <div class="error">
+                {{ form.password1.errors }}
+            </div>
+            {{ form.password1 }} <br>
+
+            <!-- Password 2 -->
+            <div class="error">
+                {{ form.password2.errors }}
+            </div>
+            {{ form.password2 }} <br>
+            <input type="submit" class="fadeIn fourth" value="Sign Up">
+        </form>
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" href="{% url 'login' %}">Already have an account ?</a>
         </div>
-    </form>
+    </div>
 </div>
 {% endblock content %}
+{% block scripts %}
+<script>
+    document.getElementById("id_username").setAttribute("placeholder", "Username");
+    document.getElementById("id_email").setAttribute("placeholder", "Email Address");
+    document.getElementById("id_password1").setAttribute("placeholder", "Password");
+    document.getElementById("id_password2").setAttribute("placeholder", "Password Confirmation");
+</script>
+{% endblock scripts %}

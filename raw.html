@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <h1 class="text-center alert alert-danger">Welcome to Homepage!</h1>
+    <form class="d-flex">
+        <input id="search_here" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-info" type="submit">Search</button>
+    </form>
+    <div id="box">
+        {% for item in object_list %}
+        <b>{{ item }}</b> <br>
+        {% endfor %}
+    </div>
+    <!-- <div class="col-sm-5 offset-1">
+        <h4 class="text-center alert alert-info">Organization</h4>
+        <a class="btn btn-success" href="{% url 'profile' %}">Create Profile</a>
+    </div>
+    <div class="col-sm-5">
+        <h4 class="text-center alert alert-info">User</h4>
+        <a class="btn btn-success" href="{% url 'profile' %}">Create Profile</a>
+    </div> -->
+</div>
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+    const data = '{{qs_json}}';
+    console.log(data);
+
+    const rdata = JSON.parse(data.replace(/&quot;/g, '"'));
+    console.log(rdata);
+
+    const input = document.getElementById('search_here');
+    const box = document.getElementById('box');
+    let filteredArr = []
+    input.addEventListener("keyup", (e) => {
+        box.innerHTML = "";
+        filteredArr = rdata.filter(info => info['full_name'].includes(e.target.value));
+        console.log(filteredArr);
+        if (filteredArr.length > 0) {
+            filteredArr.map(item => {
+                if (item['type'] === 'org') {
+                    box.innerHTML += `<b>${item['full_name']}</b></br>`;
+                }
+            })
+        } else {
+            box.innerHTML = `<b>No Results Found</b>`;
+        }
+    })
+</script>
+
+{% endblock scripts %}
+
+
+
+<form method="POST" style="border: 1px solid black; margin: 4%; padding:10%; border-radius:1%;">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        {{ form|crispy}}
+    </fieldset>
+    <div class="mt-5">
+        <input type="submit" class="btn btn-success" value="Sign Up">
+        <a class="btn btn-danger text-white" href="{% url 'login' %}">Already have an account ?</a>
+    </div>
+</form>

@@ -3,11 +3,11 @@ from django.urls import path, include
 from django.conf.urls import url
 from dashboard import views as d_views
 from organization import views as o_views
-# from dashboard.forms import UserLoginForm
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve 
+# from dashboard.forms import UserLoginForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,11 +15,10 @@ urlpatterns = [
     path('account/signup/', d_views.signup, name='signup'),
     path('activate/<slug:uidb64>/<slug:token>/', d_views.activate, name='activate'),
     path('organization/', include('organization.urls')),
-    # path('profile/', d_views.user_profile, name='profile'),
+    # path('login/',auth_views.LoginView.as_view(template_name="registration/login.html",authentication_form=UserLoginForm), name='login'),
     path('profile/', d_views.profile, name='profile'),
     path('edit/<int:id>/', d_views.edit_profile, name='edit_profile'),
-    path('orgs/', o_views.orgs, name='orgs'),
-    # path('user/', include('users.urls')),
+    path('orgs/', o_views.OrganizationList.as_view(), name='orgs'),
     path('accounts/', include('django.contrib.auth.urls')),
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),

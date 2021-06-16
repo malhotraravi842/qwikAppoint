@@ -1,9 +1,11 @@
 from django.forms import models
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from .forms import AppointmentForm
 from .models import Appointment
 from django.contrib.auth.models import User
 from dashboard.models import Profile
+from django.views.generic import ListView
+import json
 
 
 # def org_profile(request):
@@ -42,29 +44,47 @@ from dashboard.models import Profile
 #     else:
 #         return render(request, 'organization/profile.html', {'text': 'User Not Logged In'})
 
+def user_appointments(request):
+    if request.user.is_authenticated:
+        appointments = Appointment.objects.filter(user=request.user)
 
-def appointment(request, id):
+        return render(request, 'organization/user_appointments.html', {'appointments': appointments})
+    else:
+        return HttpResponseRedirect('/accounts/login/')
+
+def take_appointment(request, id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = AppointmentForm(request.POST)
             if form.is_valid():
                 user = request.user
                 org_id = id
+                org_name = Profile.objects.get(pk=id).full_name
                 subject = form.cleaned_data['subject']
                 date = form.cleaned_data['date']
                 time = form.cleaned_data['time']
-                form_data = Appointment(user=user, org_id=org_id, subject=subject, date=date, time=time)
+                form_data = Appointment(user=user, org_id=org_id, org_name=org_name, subject=subject, date=date, time=time)
                 form_data.save() 
 
-        org = Profile.objects.get(pk=id)    
+                return HttpResponseRedirect('/organization/appointments/')
+
         form = AppointmentForm()
-        appointments = Appointment.objects.filter(user=request.user)
-
-        return render(request, 'organization/appointment.html', {'form': form, 'appointments': appointments, 'org':org})
+        return render(request, 'organization/take_appointment.html', {'form': form})
     else:
-        return redirect('/accounts/login/')
+        return HttpResponseRedirect('/accounts/login/')
 
+class OrganizationList(ListView):
+    model = Profile
+    template_name = 'organization/orgs.html'
 
-def orgs(request):
-    orgs = Profile.objects.filter(type='org')
-    return render(request, 'organization/orgs.html', {'orgs': orgs})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query_json"] = json.dumps(list(Profile.objects.values()))
+
+        return context
+
+        
+
+# def orgs(request):
+#     orgs = Profile.objects.filter(type='org')
+#     return render(request, 'organization/orgs.html', {'orgs': orgs})

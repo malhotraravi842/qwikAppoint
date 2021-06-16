@@ -11,7 +11,10 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from .models import Profile
+from organization.models import Appointment
 
+from django.views.generic import ListView
+import json
 # Create your views here.
 
 def homepage(request):
@@ -129,3 +132,14 @@ def profile(request):
             profile = None
 
         return render(request, 'dashboard/profile.html', {'profile': profile, 'form': form})
+
+
+# class SearchView(ListView):
+#     model = Profile
+#     template_name = 'dashboard/index.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["qs_json"] = json.dumps(list(Profile.objects.values()))
+
+#         return context

@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <div class="row">
-    <h1 class="text-center alert alert-danger">Welcome to Homepage!</h1>
+    <div class="col-sm-6 alert alert-light">
+        <h1 class="alert alert-info">Tired of waiting in Line for Appointment ?</h1>
+    </div>
+    <div class="col-sm-6 banner">
+        <img src="{% static 'images/banner2.png' %}" alt="banner">
+    </div>
 </div>
 {% endblock content %}

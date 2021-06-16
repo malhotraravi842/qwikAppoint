@@ -1,11 +1,40 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock style %}
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-success" type="submit">Login</button>
-    <button type="submit">Forgot Password ?</button>
-</form>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active"> <a href="{% url 'login' %}">Sign In</a> </h2>
+        <h2 class="inactive underlineHover"><a href="{% url 'signup' %}">Sign Up</a></h2>
+        <form class="login-form" method="post">
+            {% csrf_token %}
+            <div class="error">
+                {{ form.username.errors }}
+            </div>
+            {{ form.username }}
+            <div class="error">
+                {{ form.password.errors }}
+            </div>
+            {{ form.password }}
+            <div class="error">
+                {{ form.non_field_errors }}
+            </div>
+            <input type="submit" class="fadeIn fourth" value="Log In">
+        </form>
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" href="{% url 'password_reset' %}">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
+{% block scripts %}
+<script>
+    document.getElementById("id_username").setAttribute("placeholder", "Username");
+    document.getElementById("id_password").setAttribute("placeholder", "Password");
+</script>
+{% endblock scripts %}

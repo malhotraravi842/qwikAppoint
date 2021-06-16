@@ -7,6 +7,7 @@ class Appointment(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     org_id = models.IntegerField(blank=False)
+    org_name = models.CharField(max_length=70,blank=False, default="Name")
     subject = models.CharField(max_length=150, blank=True)
     date = models.DateField(blank=False)
     time = models.TimeField(blank=False)
