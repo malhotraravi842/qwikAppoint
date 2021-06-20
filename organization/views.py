@@ -1,9 +1,16 @@
-from django.forms import models
+from django.http.response import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
 from .forms import AppointmentForm
 from .models import Appointment
 from django.contrib.auth.models import User
 from dashboard.models import Profile
+from django.core.mail import send_mail, BadHeaderError
+
+
+def appointment_message(user, org, date, time):
+    message = "Hello " + user + "\n" + "Your appointment is confirmed with " + org + " on " + str(date) + " at " + str(time)
+
+    return message
 
 
 def org_list(request):
@@ -32,15 +39,22 @@ def take_appointment(request, id):
         if request.method == 'POST':
             form = AppointmentForm(request.POST)
             if form.is_valid():
+                subject = "Appointment Confirmed"
                 user = request.user
-                org_id = id
-                org_name = Profile.objects.get(pk=id).full_name
-                subject = form.cleaned_data['subject']
+                org = User.objects.get(pk=id)
+                org_name = Profile.objects.get(user=org).full_name
+                sub = form.cleaned_data['subject']
                 date = form.cleaned_data['date']
                 time = form.cleaned_data['time']
-                form_data = Appointment(user=user, org_id=org_id, org_name=org_name, subject=subject, date=date, time=time)
+                email = user.email
+                form_data = Appointment(user=user, org_id=id, org_name=org_name, subject=sub, date=date, time=time)
                 form_data.save() 
 
+                message = appointment_message(user.username, org_name, date, time)
+                try:
+                    send_mail(subject, message, 'rc069056@gmail.com', [email])
+                except BadHeaderError:
+                    return HttpResponse('Invalid')
                 return HttpResponseRedirect('/organization/appointments/')
 
         form = AppointmentForm()

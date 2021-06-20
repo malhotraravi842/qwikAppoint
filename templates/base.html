@@ -51,14 +51,10 @@
         </div>
     </nav>
 
-    <div class="content">
-        <div class="container">
-            {% block content %}
+    {% block content %}
 
-            {% endblock content %}
-        </div>
-    </div>
-    {% block page %}{% endblock page %}
+    {% endblock content %}
+
     <div id="backdrop" class="backdrop"></div>
     <div id="search_modal" class="search-modal">
         <h4 class="d-inline">Organization Search Results</h4>

@@ -1,38 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row">
-    <h1 class="text-center alert alert-info">Your Appointments</h1>
-    <div class="col-sm-12">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Organization</th>
-                    <th scope="col">Subject</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if appointments %}
-                {% for appointment in appointments %}
-                <tr>
-                    <th scope="row">{{ appointment.id }}</th>
-                    <td>{{ appointment.org_name }}</td>
-                    <td>{{ appointment.subject }}</td>
-                    <td>{{ appointment.date }}</td>
-                    <td>{{ appointment.time }}</td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                    <td>
-                        No Appointments :(
-                    </td>
-                </tr>
-                {% endif %}
-            </tbody>
-        </table>
+<div class="appointments">
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center alert alert-info">Your Appointments</h1>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Organization</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if appointments %}
+                    {% for appointment in appointments %}
+                    <tr>
+                        <th scope="row">#{{ appointment.id }}</th>
+                        <td>{{ appointment.org_name }}</td>
+                        <td>{{ appointment.subject }}</td>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.time }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td>
+                            No Appointments :(
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock content %}

@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Neuton&family=Russo+One&display=swap');
 
+.home {
+    background-color: #00b4d8;
+}
 
 /* Start of Banner */
-.content .home {
-    height: calc(100vh - 120px);
-}
 .front-banner {
     margin-top: 20%;
     height: 80%;
@@ -28,4 +28,9 @@
     font-weight: 200;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+/* Front Banner Image */
+.front-banner-img img {
+    width: 100%;
 }
