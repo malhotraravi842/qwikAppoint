@@ -3,7 +3,8 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock style %}
-{% block content %}
+{% block title %}Login |{% endblock title %}
+{% block page %}
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
@@ -22,7 +23,7 @@
             <div class="error">
                 {{ form.non_field_errors }}
             </div>
-            <input type="submit" class="fadeIn fourth" value="Log In">
+            <input type="submit" class="fadeIn fourth" value="Sign In">
         </form>
         <!-- Remind Passowrd -->
         <div id="formFooter">
@@ -31,7 +32,7 @@
     </div>
 </div>
 
-{% endblock content %}
+{% endblock page %}
 {% block scripts %}
 <script>
     document.getElementById("id_username").setAttribute("placeholder", "Username");

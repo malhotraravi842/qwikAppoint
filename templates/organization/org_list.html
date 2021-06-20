@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/org_list.css' %}">
+{% endblock style %}
+{% block page %}
+<div class="row">
+    {% if orgs %}
+    <div class="cards">
+        {% for org in orgs %}
+        <a class="card" href="#">
+            <span class="card-header" style="background-image: url({{ org.image.url }});">
+                <span class="card-title">
+                    <h3>{{ org.full_name }}</h3>
+                </span>
+            </span>
+            <span class="card-summary">
+                <ol>
+                    <li>Email: {{ org.user.email }}</li>
+                    <li>Contact: {{ org.contact }}</li>
+                    <li>Address: {{ org.address }}, {{ org.pincode }}</li>
+                </ol>
+            </span>
+            <span class="card-meta">
+                Published: June 18th, 2015
+            </span>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h1>No Records Found</h1>
+    {% endif %}
+</div>
+{% endblock page %}

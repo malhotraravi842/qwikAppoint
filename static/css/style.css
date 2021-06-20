@@ -1,25 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');
+
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+.content {
+    background-color: #00b4d8;
+}
 
 .footer {
     width: 100%;
     text-align: center;
     background-color: black;
     color: #fff;
+    height: 50px;
+    display: flex;
+    justify-content: center;
 }
 .nav-color {
     background-color: #00b4d8;
-    /* color: #fff !important; */
 }
 .navbar-brand {
     font-size: 1.8em;
     font-family: 'Merriweather', serif;
     text-shadow: 1px 1px 2px #ccc;
 }
-/* .content {
-    height: 90vh;
-} */
-.left-margin {
-    margin-left: auto !important;
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.2em;
+    font-family: 'Vollkorn', serif;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgb(0, 0, 0, 0.3);
+}
+.navbar-nav {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .card {
@@ -38,6 +55,8 @@
     border-radius: .25rem;
 }
 
+
+
 .card-body {
     flex: 1 1 auto;
     min-height: 1px;
@@ -48,4 +67,43 @@
 /* Home */
 .banner img {
     width: 100%;
+}
+
+
+/* Search Modal */
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0, 0.2);
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}
+
+.search-modal {
+    position: fixed;
+    top: 0;
+    background-color: #fff;
+    width: 100%;
+    margin: 100px 150px;
+    height: calc(100% - 200px);
+    width: calc(100% - 300px);
+    box-shadow: 5px 5px 25px rgb(0, 0, 0, 0.2);
+    padding: 50px;
+    border-radius: 5px;
+    overflow-y: scroll;
+    display: none;
+}
+
+.search-modal::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+.cancel-btn {
+    float: right;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-weight: 700;
 }

@@ -4,7 +4,8 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock style %}
-{% block content %}
+{% block title %}Sign Up |{% endblock title %}
+{% block page %}
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
@@ -45,7 +46,7 @@
         </div>
     </div>
 </div>
-{% endblock content %}
+{% endblock page %}
 {% block scripts %}
 <script>
     document.getElementById("id_username").setAttribute("placeholder", "Username");

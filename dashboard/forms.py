@@ -47,20 +47,6 @@ class RegistrationForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('full_name','type', 'contact', 'bio', 'address', 'pincode')
-
-        widgets = {
-            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'type' : forms.Select(choices=USER_TYPE, attrs={'class': 'form-control'}),
-            'contact': forms.TextInput(attrs={'class': 'form-control'}),
-            'bio': forms.TextInput(attrs={'class': 'form-control'}),
-            'address': forms.TextInput(attrs={'class': 'form-control'}),
-            'pincode': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-
-class ProfileEditForm(forms.ModelForm):
-    class Meta:
-        model = Profile
         fields = ('full_name','contact', 'bio', 'address', 'pincode')
 
         widgets = {

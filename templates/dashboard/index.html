@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}"> {% endblock style %}
 {% block content %}
-<div class="row">
-    <h1 class="text-center alert alert-danger">Welcome to Homepage!</h1>
-    {% if profile %}
-    <h1>Welcome!</h1>
-    {% else %}
-    <div class="col-sm-5 offset-1">
-        <h4 class="text-center alert alert-info">Organization</h4>
-        <a class="btn btn-success" href="{% url 'profile' %}">Create Profile</a>
+<div class="row home">
+    <div class="col-sm-6">
+        <div class="front-banner">
+            <div class="title">
+                <h1>Helping people save time</h1>
+                <p>Millions of Customers and companies come together to make this time consuming process easier</p>
+                <form action="{% url 'signup' %}" class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Email Address" aria-label="Search">
+                    <button class="btn btn-light d-inline" type="submit">SignUp</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-5">
-        <h4 class="text-center alert alert-info">User</h4>
-        <a class="btn btn-success" href="{% url 'profile' %}">Create Profile</a>
+    <div class="col-sm-6 banner">
+        <img src="{% static 'images/banner2.png' %}" alt="banner">
     </div>
-    {% endif %}
 </div>
 {% endblock content %}

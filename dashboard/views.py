@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from .forms import RegistrationForm, ProfileForm, ProfileEditForm
+from .forms import RegistrationForm, ProfileForm
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text, force_bytes
@@ -23,12 +23,15 @@ def homepage(request):
             profile = Profile.objects.get(user=request.user)
         except Profile.DoesNotExist:
             profile = None
-        return render(request, 'dashboard/index.html', {'profile': profile})
+        return render(request, 'dashboard/dashboard.html', {'profile': profile})
     else:
-        return render(request, 'dashboard/home.html')
+        return render(request, 'dashboard/index.html')
 
-def signup(request):
+def signup(request, *args):
     if request.method == 'POST':
+        if args:
+            print(args[0])
+
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -53,6 +56,7 @@ def signup(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -73,13 +77,13 @@ def activate(request, uidb64, token):
 def edit_profile(request, id):
     if request.method == 'POST':
         profile = Profile.objects.get(pk=id)
-        form = ProfileEditForm(request.POST, instance=profile)
+        form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/profile/')
     else:
         profile = Profile.objects.get(pk=id)
-        form = ProfileEditForm(instance=profile)
+        form = ProfileForm(instance=profile)
 
     return render(request, 'dashboard/edit_profile.html', {'form': form})
 
@@ -110,28 +114,33 @@ def edit_profile(request, id):
 
 
 
-def profile(request):
+def create_profile(request, type):
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = ProfileForm(request.POST)
             if form.is_valid():
                 full_name = form.cleaned_data['full_name']
-                type = form.cleaned_data['type']
                 contact = form.cleaned_data['contact']
                 bio = form.cleaned_data['bio']
                 address = form.cleaned_data['address']
                 pincode = form.cleaned_data['pincode']
                 form_data = Profile(user=request.user, full_name=full_name, type=type , contact=contact, bio=bio, address=address, pincode=pincode)
                 form_data.save()
-            return HttpResponseRedirect('/profile/')
+            return HttpResponseRedirect('/profile/' + request.user.username + '/')
 
         form = ProfileForm()
-        try:
-            profile = Profile.objects.get(user=request.user)
-        except Profile.DoesNotExist:
-            profile = None
 
-        return render(request, 'dashboard/profile.html', {'profile': profile, 'form': form})
+        return render(request, 'dashboard/profile.html', {'form': form})
+
+
+def user_profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    return render(request, 'dashboard/profile.html', {'profile': profile})
 
 
 # class SearchView(ListView):

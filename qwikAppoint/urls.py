@@ -7,7 +7,7 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve 
-# from dashboard.forms import UserLoginForm
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,10 +15,10 @@ urlpatterns = [
     path('account/signup/', d_views.signup, name='signup'),
     path('activate/<slug:uidb64>/<slug:token>/', d_views.activate, name='activate'),
     path('organization/', include('organization.urls')),
-    # path('login/',auth_views.LoginView.as_view(template_name="registration/login.html",authentication_form=UserLoginForm), name='login'),
-    path('profile/', d_views.profile, name='profile'),
+    url(r'^create/profile/(?P<type>\w+)/$', d_views.create_profile,name='create_profile'),
     path('edit/<int:id>/', d_views.edit_profile, name='edit_profile'),
-    path('orgs/', o_views.OrganizationList.as_view(), name='orgs'),
+    url(r'^profile/(?P<username>\w+)/$', d_views.user_profile,name='profile'),
+    path('org/list', o_views.org_list, name='org_list'),
     path('accounts/', include('django.contrib.auth.urls')),
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),

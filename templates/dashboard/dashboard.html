@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <h1 class="text-center alert alert-danger">Welcome to Homepage!</h1>
+    {% if profile %}
+    <h1>Welcome!</h1>
+    {% else %}
+    <div class="col-sm-5 offset-1">
+        <h4 class="text-center alert alert-info">Organization</h4>
+        <a class="btn btn-success" href="{% url 'create_profile' 'org' %}">Create Profile</a>
+    </div>
+    <div class="col-sm-5">
+        <h4 class="text-center alert alert-info">User</h4>
+        <a class="btn btn-success" href="{% url 'create_profile' 'user' %}">Create Profile</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
