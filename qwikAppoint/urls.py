@@ -10,7 +10,7 @@ from django.views.static import serve
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls), 
     path('', d_views.homepage, name='home'),
     path('account/signup/', d_views.signup, name='signup'),
     path('activate/<slug:uidb64>/<slug:token>/', d_views.activate, name='activate'),
@@ -27,7 +27,10 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-
+handler404 = 'dashboard.views.handler404'
+handler500 = 'dashboard.views.handler500'
+handler403 = 'dashboard.views.handler403'
+handler400 = 'dashboard.views.handler400'
 
 
 

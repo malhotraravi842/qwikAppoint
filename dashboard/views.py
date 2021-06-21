@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from django.template import RequestContext
 from .forms import RegistrationForm, ProfileForm
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
@@ -11,11 +12,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from .models import Profile
-from organization.models import Appointment
 
-from django.views.generic import ListView
-import json
-# Create your views here.
 
 def homepage(request):
     if request.user.is_authenticated:
@@ -88,32 +85,6 @@ def edit_profile(request, id):
     return render(request, 'dashboard/edit_profile.html', {'form': form})
 
 
-# def user_profile(request):
-#     if request.user.is_authenticated:
-#         if request.method == 'POST':
-#             form = ProfileForm(request.POST)
-#             if form.is_valid():
-#                 type = form.cleaned_data['type']
-#                 contact = form.cleaned_data['contact']
-#                 bio = form.cleaned_data['bio']
-#                 address = form.cleaned_data['address']
-#                 pincode = form.cleaned_data['pincode']
-
-#                 form_data = Profile(user=request.user, type=type, contact=contact, bio=bio, address=address, pincode=pincode)
-#                 form_data.save()
-#         else:
-#             user = request.user
-#             try:
-#                 profile = Profile.objects.get(user=user)
-#             except Profile.DoesNotExist:
-#                 profile = None
-#             form = ProfileForm(instance=profile)
-#         return render(request, 'dashboard/profile.html', {'form': form, 'profile': 'profile'})
-#     else:
-#         return render(request, 'dashboard/profile.html', {'text': 'User is Not Logged In'})
-
-
-
 def create_profile(request, type):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -142,13 +113,47 @@ def user_profile(request, username):
 
     return render(request, 'dashboard/profile.html', {'profile': profile})
 
+# Custom Pages for Errors
 
-# class SearchView(ListView):
-#     model = Profile
-#     template_name = 'dashboard/index.html'
+# def error_404(request, exception):
+#     # data = {}
+#     return render(request,'dashboard/404.html')
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["qs_json"] = json.dumps(list(Profile.objects.values()))
+# def error_500(request, exception):
+#     # data = {}
+#     return render(request,'dashboard/500.html')
 
-#         return context
+# def error_403(request, exception):
+#     # data = {}
+#     return render(request,'dashboard/403.html')
+
+# def error_400(request, exception):
+#     # data = {}
+#     return render(request,'dashboard/400.html')
+
+
+def handler404(request, *args, **argv):
+    context = {}
+    response = render(request, 'dashboard/404.html', context)
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    context = {}
+    response = render(request, 'dashboard/500.html', context)
+    response.status_code = 500
+    return response
+
+def handler403(request, *args, **argv):
+    context = {}
+    response = render(request, 'dashboard/403.html', context)
+    response.status_code = 403
+    return response
+
+
+def handler400(request, *args, **argv):
+    context = {}
+    response = render(request, 'dashboard/400.html', context)
+    response.status_code = 400
+    return response
