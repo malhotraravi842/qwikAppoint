@@ -102,10 +102,13 @@
         filteredArr = [];
         searchBar.addEventListener("submit", (e) => {
             e.preventDefault();
+            const formData = e.target.elements.search.value;
+            if (formData.length <= 0) {
+                return;
+            }
             tablebox.innerHTML = "";
             backdrop.style.display = 'initial';
             searchModal.style.display = 'initial';
-            const formData = e.target.elements.search.value;
             filteredArr = orgs.filter(info => info['full_name'].toLowerCase().includes(formData.toLowerCase()));
             if (filteredArr.length > 0) {
                 filteredArr.map(item => {

@@ -24,11 +24,8 @@ def homepage(request):
     else:
         return render(request, 'dashboard/index.html')
 
-def signup(request, *args):
+def signup(request):
     if request.method == 'POST':
-        if args:
-            print(args[0])
-
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -112,24 +109,6 @@ def user_profile(request, username):
         profile = None
 
     return render(request, 'dashboard/profile.html', {'profile': profile})
-
-# Custom Pages for Errors
-
-# def error_404(request, exception):
-#     # data = {}
-#     return render(request,'dashboard/404.html')
-
-# def error_500(request, exception):
-#     # data = {}
-#     return render(request,'dashboard/500.html')
-
-# def error_403(request, exception):
-#     # data = {}
-#     return render(request,'dashboard/403.html')
-
-# def error_400(request, exception):
-#     # data = {}
-#     return render(request,'dashboard/400.html')
 
 
 def handler404(request, *args, **argv):
