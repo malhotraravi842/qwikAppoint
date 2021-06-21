@@ -19,7 +19,7 @@ pip install virtualenv
 
 virtualenv myprojectenv
 
-source myprojectenv/bin/acctivate
+source myprojectenv/bin/activate
 
 pip install -r requirements.txt
 
