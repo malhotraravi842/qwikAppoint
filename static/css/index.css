@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Neuton&family=Russo+One&display=swap');
 
+
 .home {
-    background-color: #00b4d8;
+    background-color: var(--bg-color);
 }
 
 /* Start of Banner */

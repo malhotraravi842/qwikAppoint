@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');
 
+:root {
+    --bg-color: #00b4d8;
+}
+
 body {
     width: 100%;
     overflow-x: hidden;
 }
 /* Navbar */
 .nav-color {
-    background-color: #00b4d8;
+    background-color: var(--bg-color);
 }
 .navbar-brand {
     font-size: 1.8em;
@@ -26,6 +30,56 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+.profile-logo {
+    width: 40px;
+    height: 40px;
+    margin-left: 25px;
+}
+.l-margin {
+    margin-right: 0;
+}
+#search_bar input {
+    display: block;
+    width: 110%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    outline: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition-property: border-color, box-shadow;
+    transition-duration: 0.15s, 0.15s;
+    transition-timing-function: ease-in-out, ease-in-out;
+    transition-delay: 0s, 0s;
+}
+.search-bar {
+    display: none !important;
+}
+.search-cancel {
+    margin-left: -35px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #ccc;
+    font-weight: 700;
+}
+.hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
 /* Content Block */
 .home,
 .create-profile,
